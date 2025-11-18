@@ -84,9 +84,9 @@ function App() {
         <h1 className="text-2xl ">zetteln</h1>
       </header>
 
-      <main className="flex-1 flex max-w-md mx-auto items-center justify-center p-4">
+      <main className="flex-1 flex  mx-auto items-center justify-center ">
         {state === "initial" && (
-          <div className="w-full gap-16 px-16 flex justify-center items-center flex-col   text-center">
+          <div className="w-full  gap-16 max-w-md px-16 flex justify-center items-center flex-col   text-center">
             <h2 className="text-slate-800 text-xl mb-4">
               Du möchtest ein schwierigen Text besser verstehen.
             </h2>
@@ -134,33 +134,31 @@ function App() {
         )}
 
         {state === "success" && (
-          <div className="w-full flex flex-col justify-between min-h-[85vh]  text-xl">
-            <div>
-              <div className="flex bg-white p-4 rounded-2xl flex-col text-lg gap-3">
-                <div className="flex  justify-between">
-                  <p>Wie schwierig?</p>
-                  <div className="flex gap-2">
-                    <div className="h-6 w-6 bg-sand-100 rounded-full">
-                      <div className="h-6 w-3 bg-blue-400 rounded-l-full"></div>
-                    </div>
-                    <div className="h-6 w-6 bg-sand-100 rounded-full"></div>
-                    <div className="h-6 w-6 bg-sand-100 rounded-full"></div>
+          <div className="w-full flex flex-col gap-8  text-xl">
+            <div className="flex bg-white max-w-md m-4 p-4 rounded-2xl flex-col text-lg gap-3">
+              <div className="flex  justify-between">
+                <p>Wie schwierig?</p>
+                <div className="flex gap-2">
+                  <div className="h-6 w-6 bg-sand-100 rounded-full">
+                    <div className="h-6 w-3 bg-blue-400 rounded-l-full"></div>
                   </div>
+                  <div className="h-6 w-6 bg-sand-100 rounded-full"></div>
+                  <div className="h-6 w-6 bg-sand-100 rounded-full"></div>
                 </div>
-                <div className="flex  justify-between">
-                  <p>Ist es wichtig?</p>
-                  <div className="flex gap-2">
-                    <div className="h-6 w-6 bg-blue-400 rounded-full"></div>
-                    <div className="h-6 w-6 bg-blue-400 rounded-full"></div>
-                    <div className="h-6 w-6 bg-sand-100 rounded-full">
-                      <div className="h-6 w-3 bg-blue-400 rounded-l-full"></div>
-                    </div>
+              </div>
+              <div className="flex  justify-between">
+                <p>Ist es wichtig?</p>
+                <div className="flex gap-2">
+                  <div className="h-6 w-6 bg-blue-400 rounded-full"></div>
+                  <div className="h-6 w-6 bg-blue-400 rounded-full"></div>
+                  <div className="h-6 w-6 bg-sand-100 rounded-full">
+                    <div className="h-6 w-3 bg-blue-400 rounded-l-full"></div>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="flex flex-col gap-6">
+            <div className="flex px-4 flex-col gap-6">
               <div className="flex text-xl flex-col gap-2">
                 <h3 className="font-semibold">Unser Ziel</h3>
                 <p className=" ">
@@ -227,19 +225,22 @@ function App() {
                 </li>
               </ul>
             </div>
-            <div className="flex flex-col gap-2 max-w-sm">
-              <a
-                className="rounded-full text-center bg-black-800 text-white py-4 px-8 hover:bg-black-800/90"
-                href="https://www.zetteln.app/AppWaitlist"
-              >
-                App nutzen
-              </a>
-              <a
-                className="rounded-full text-center border-solid border-black-800 border-1 hover:bg-black-800/10  py-4 px-8 "
-                href="https://www.zetteln.app/"
-              >
-                Mehr über zetteln
-              </a>
+            <div className="  flex flex-col gap-2 items-center p-4 w-screen">
+              <h2>Dir gefällt die App ?</h2>
+              <div className="flex flex-col gap-2 w-full max-w-sm">
+                <a
+                  className="rounded-full  text-center bg-black-800 text-white py-4 px-8 hover:bg-black-800/90"
+                  href="https://www.zetteln.app/AppWaitlist"
+                >
+                  Warteliste
+                </a>
+                <a
+                  className="rounded-full text-center border-solid border-black-800 border-1 hover:bg-black-800/10  py-4 px-8 "
+                  href="https://www.zetteln.app/"
+                >
+                  Mehr über zetteln
+                </a>
+              </div>
             </div>
           </div>
         )}
