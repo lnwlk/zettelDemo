@@ -2,7 +2,6 @@ import { useState, useRef } from 'react';
 import { createWorker } from 'tesseract.js';
 import { config } from './config';
 import { validateDocument } from './utils/textMatcher';
-import './App.css';
 
 function App() {
   const [state, setState] = useState('initial'); // initial, processing, success, error
@@ -74,20 +73,23 @@ function App() {
   };
 
   return (
-    <div className="app">
-      <header className="app-header">
-        <h1>Zettel OCR Scanner</h1>
+    <div className="min-h-screen flex flex-col">
+      <header className="bg-slate-700 text-white p-4 text-center shadow-md">
+        <h1 className="text-2xl font-semibold">Zettel OCR Scanner</h1>
       </header>
 
-      <main className="app-content">
+      <main className="flex-1 flex items-center justify-center p-4">
         {state === 'initial' && (
-          <div className="screen initial-screen">
-            <div className="icon">📄</div>
-            <h2>Scan Your Document</h2>
-            <p className="instructions">
+          <div className="w-full max-w-md bg-white rounded-xl p-8 shadow-lg text-center">
+            <div className="text-6xl mb-4">📄</div>
+            <h2 className="text-slate-800 text-2xl mb-4">Scan Your Document</h2>
+            <p className="text-gray-500 text-base leading-relaxed mb-8">
               Place your document on a flat surface and ensure good lighting for best results.
             </p>
-            <button className="primary-button" onClick={handleScanClick}>
+            <button
+              className="bg-blue-500 text-white border-0 rounded-lg py-4 px-8 text-lg font-semibold cursor-pointer transition-colors w-full max-w-xs shadow-md hover:bg-blue-600 active:translate-y-px"
+              onClick={handleScanClick}
+            >
               Scan Document
             </button>
             <input
@@ -96,62 +98,68 @@ function App() {
               accept="image/*"
               capture="environment"
               onChange={handleFileChange}
-              style={{ display: 'none' }}
+              className="hidden"
             />
           </div>
         )}
 
         {state === 'processing' && (
-          <div className="screen processing-screen">
+          <div className="w-full max-w-md bg-white rounded-xl p-8 shadow-lg text-center">
             {capturedImage && (
-              <div className="image-preview">
-                <img src={capturedImage} alt="Captured document" />
+              <div className="mb-6 rounded-lg overflow-hidden shadow-lg">
+                <img src={capturedImage} alt="Captured document" className="w-full h-auto max-h-[300px] object-contain" />
               </div>
             )}
-            <div className="spinner"></div>
-            <h2>Processing document...</h2>
-            <div className="progress-bar">
-              <div className="progress-fill" style={{ width: `${progress}%` }}></div>
+            <div className="border-4 border-gray-200 border-t-blue-500 rounded-full w-12 h-12 animate-spin mx-auto mb-4"></div>
+            <h2 className="text-slate-800 text-2xl mb-4">Processing document...</h2>
+            <div className="w-full h-2 bg-gray-200 rounded overflow-hidden my-4">
+              <div className="h-full bg-blue-500 transition-all duration-300" style={{ width: `${progress}%` }}></div>
             </div>
-            <p className="progress-text">{progress}%</p>
+            <p className="text-gray-500 text-sm mt-2">{progress}%</p>
           </div>
         )}
 
         {state === 'success' && (
-          <div className="screen success-screen">
-            <div className="icon success-icon">✓</div>
-            <h2>Document Recognized!</h2>
-            <p className="match-info">Match: {matchPercentage}%</p>
-            <div className="result-box">
-              <h3>Plain Language Version:</h3>
-              <p className="plain-text">{config.plainLanguageVersion}</p>
+          <div className="w-full max-w-md bg-white rounded-xl p-8 shadow-lg text-center">
+            <div className="text-green-600 text-4xl w-20 h-20 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-4">✓</div>
+            <h2 className="text-slate-800 text-2xl mb-4">Document Recognized!</h2>
+            <p className="text-gray-500 text-sm my-4">Match: {matchPercentage}%</p>
+            <div className="bg-gray-50 rounded-lg p-6 my-6 text-left">
+              <h3 className="text-slate-800 text-lg mb-4">Plain Language Version:</h3>
+              <p className="text-slate-700 text-lg leading-relaxed">{config.plainLanguageVersion}</p>
             </div>
-            <button className="primary-button" onClick={handleReset}>
+            <button
+              className="bg-blue-500 text-white border-0 rounded-lg py-4 px-8 text-lg font-semibold cursor-pointer transition-colors w-full max-w-xs shadow-md hover:bg-blue-600 active:translate-y-px"
+              onClick={handleReset}
+            >
               Scan Another
             </button>
           </div>
         )}
 
         {state === 'error' && (
-          <div className="screen error-screen">
-            <div className="icon error-icon">✕</div>
-            <h2>Document Not Recognized</h2>
-            <p className="error-message">
+          <div className="w-full max-w-md bg-white rounded-xl p-8 shadow-lg text-center">
+            <div className="text-red-600 text-4xl w-20 h-20 rounded-full bg-red-100 flex items-center justify-center mx-auto mb-4">✕</div>
+            <h2 className="text-slate-800 text-2xl mb-4">Document Not Recognized</h2>
+            <p className="text-gray-500 text-base leading-relaxed mb-6">
               The scanned document doesn't match our reference. Please try again with better
               lighting or a clearer image.
             </p>
             {matchPercentage > 0 && (
-              <p className="match-info">Match: {matchPercentage}% (minimum 70% required)</p>
+              <p className="text-gray-500 text-sm my-4">Match: {matchPercentage}% (minimum 70% required)</p>
             )}
-            <button className="primary-button" onClick={handleReset}>
+            <button
+              className="bg-blue-500 text-white border-0 rounded-lg py-4 px-8 text-lg font-semibold cursor-pointer transition-colors w-full max-w-xs shadow-md hover:bg-blue-600 active:translate-y-px"
+              onClick={handleReset}
+            >
               Try Again
             </button>
           </div>
         )}
       </main>
 
-      <footer className="app-footer">
-        <p>Mobile Document Scanner with OCR</p>
+      <footer className="bg-slate-700 text-gray-400 p-4 text-center text-sm">
+        <p className="m-0">Mobile Document Scanner with OCR</p>
       </footer>
     </div>
   );
