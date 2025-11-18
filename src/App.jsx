@@ -256,8 +256,10 @@ function App() {
             <p className="text-gray-500 text-base leading-relaxed mb-6">
               Dies ist eine Demo-Version mit der nur freigegebenen Dokumente
               gesannt werden können.{" "}
-              <a href="mailto:lena@zetteln.app">Schreibe uns</a> und erzähle uns
-              von deinem Anwendungsfall!
+              <a className="font-semibold" href="mailto:lena@zetteln.app">
+                Schreibe uns
+              </a>{" "}
+              und erzähle uns von deinem Anwendungsfall!
             </p>
             {matchPercentage > 0 && (
               <p className="text-gray-500 text-sm my-4">
