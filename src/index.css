@@ -1,7 +1,20 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: "zetteln";
+  src: url("../src/assets/fonts/Lexend-VariableFont_wght.ttf")
+    format("truetype");
+  font-weight: 100 900; /* variable font supports 100–900 */
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  font-stretch: 75% 125%;
+}
+
 @theme {
-  --color-initial: *;
-  --color-sand-100: #f7f0e5;
-  --color-black-950: #030712;
+  --font-sans: "zetteln", sans-serif;
+  --font-weight: 200;
+  --color-black-800: #2d2f34;
+  --color-sand-50: #fdf9f5;
+  --color-sand-100: #f8f0e5;
 }

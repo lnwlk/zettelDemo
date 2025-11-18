@@ -79,7 +79,7 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-sand-100 flex flex-col">
+    <div className="min-h-screen  bg-sand-100 flex flex-col">
       <header className=" p-4 text-center ">
         <h1 className="text-2xl font-semibold">zetteln</h1>
       </header>
@@ -94,7 +94,7 @@ function App() {
               📄
             </div>
             <button
-              className="bg-black-950 text-white border-0 rounded-full py-4 px-8 text-lg font-semibold cursor-pointer transition-colors w-full max-w-xs shadow-md hover:bg-black/80 active:translate-y-px"
+              className="bg-black-800 text-white border-0 rounded-full py-4 px-8 text-lg font-semibold cursor-pointer transition-colors w-full max-w-xs shadow-md hover:bg-black/80 active:translate-y-px"
               onClick={handleScanClick}
             >
               Foto machen
@@ -210,13 +210,13 @@ function App() {
             </div>
             <div className="flex flex-col gap-4 max-w-sm">
               <a
-                className="rounded-full text-center bg-black-950 text-white py-4 px-8 hover:bg-black-950/90"
+                className="rounded-full text-center bg-black-800 text-white py-4 px-8 hover:bg-black-800/90"
                 href="https://www.zetteln.app/AppWaitlist"
               >
                 App nutzen
               </a>
               <a
-                className="rounded-full text-center border-solid border-black-950 border-1 hover:bg-black-950/10  py-4 px-8 "
+                className="rounded-full text-center border-solid border-black-800 border-1 hover:bg-black-800/10  py-4 px-8 "
                 href="https://www.zetteln.app/"
               >
                 Mehr über zetteln
