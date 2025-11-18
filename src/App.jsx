@@ -79,15 +79,15 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen  bg-sand-100 flex flex-col">
-      <header className=" p-4 text-center ">
-        <h1 className="text-2xl font-semibold">zetteln</h1>
+    <div className="min-h-screen  bg-sand-100 flex justify-between flex-col">
+      <header className="pt-4 text-center ">
+        <h1 className="text-2xl ">zetteln</h1>
       </header>
 
-      <main className="flex-1 flex items-center justify-center p-4">
+      <main className="flex-1 flex max-w-md mx-auto items-center justify-center p-4">
         {state === "initial" && (
           <div className="w-full gap-16 px-16 flex justify-center items-center flex-col   text-center">
-            <h2 className="text-slate-800 text-2xl mb-4">
+            <h2 className="text-slate-800 text-xl mb-4">
               Du möchtest ein schwierigen Text besser verstehen.
             </h2>
             <div className="text-6xl w-40 h-40 bg-white rounded-full flex justify-center items-center  mb-4">
@@ -111,9 +111,9 @@ function App() {
         )}
 
         {state === "processing" && (
-          <div className="w-full max-w-md bg-white rounded-xl p-8 shadow-lg text-center">
+          <div className="w-full max-w-md  text-center">
             {capturedImage && (
-              <div className="mb-6 rounded-lg overflow-hidden shadow-lg">
+              <div className="mb-6  rounded-lg overflow-hidden shadow-lg">
                 <img
                   src={capturedImage}
                   alt="Captured document"
@@ -122,9 +122,7 @@ function App() {
               </div>
             )}
             <div className="border-4 border-gray-200 border-t-blue-500 rounded-full w-12 h-12 animate-spin mx-auto mb-4"></div>
-            <h2 className="text-slate-800 text-2xl mb-4">
-              Processing document...
-            </h2>
+            <h2 className="text-slate-800 text-2xl mb-4">Dokument lesen...</h2>
             <div className="w-full h-2 bg-gray-200 rounded overflow-hidden my-4">
               <div
                 className="h-full bg-blue-500 transition-all duration-300"
@@ -136,23 +134,43 @@ function App() {
         )}
 
         {state === "success" && (
-          <div className="w-full flex flex-col gap-12 text-xl">
+          <div className="w-full flex flex-col justify-between min-h-[85vh]  text-xl">
             <div>
-              <h1 className="">Brief</h1>
-              <h2 className=" text-4xl mb-4">
-                Projekt <br />
-                Beschreibung
-              </h2>
+              <div className="flex bg-white p-4 rounded-2xl flex-col text-lg gap-3">
+                <div className="flex  justify-between">
+                  <p>Wie schwierig?</p>
+                  <div className="flex gap-2">
+                    <div className="h-6 w-6 bg-sand-100 rounded-full">
+                      <div className="h-6 w-3 bg-blue-400 rounded-l-full"></div>
+                    </div>
+                    <div className="h-6 w-6 bg-sand-100 rounded-full"></div>
+                    <div className="h-6 w-6 bg-sand-100 rounded-full"></div>
+                  </div>
+                </div>
+                <div className="flex  justify-between">
+                  <p>Ist es wichtig?</p>
+                  <div className="flex gap-2">
+                    <div className="h-6 w-6 bg-blue-400 rounded-full"></div>
+                    <div className="h-6 w-6 bg-blue-400 rounded-full"></div>
+                    <div className="h-6 w-6 bg-sand-100 rounded-full">
+                      <div className="h-6 w-3 bg-blue-400 rounded-l-full"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div className="flex flex-col gap-4">
-              <h3 className="text-2xl">Unser Ziel</h3>
-              <p className=" ">
-                Unsere App hilft dir,
-                <br />
-                schwierigen Briefe zu verstehen.
-              </p>
+
+            <div className="flex flex-col gap-6">
+              <div className="flex text-xl flex-col gap-2">
+                <h3 className="font-semibold">Unser Ziel</h3>
+                <p className=" ">
+                  Unsere App hilft dir,
+                  <br />
+                  schwierigen Briefe zu verstehen.
+                </p>
+              </div>
               <ul className="text-xl flex flex-col gap-4">
-                <li className="flex gap-2 items-center">
+                <li className="flex gap-4 items-center">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -168,9 +186,9 @@ function App() {
                       stroke-linejoin="round"
                     />
                   </svg>
-                  Sie erklärt Briefe in einfacher Sprache.
+                  Die App erklärt Briefe <br /> in einfacher Sprache.
                 </li>
-                <li className="flex gap-2 items-center">
+                <li className="flex gap-4 items-center">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -186,9 +204,10 @@ function App() {
                       stroke-linejoin="round"
                     />
                   </svg>
-                  Sie hilft beim Ausfüllen von Formularen
+                  Die App hilft beim Ausfüllen <br />
+                  von Formularen
                 </li>
-                <li className="flex gap-2 items-center">
+                <li className="flex gap-4 items-center">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -204,11 +223,11 @@ function App() {
                       stroke-linejoin="round"
                     />
                   </svg>
-                  Sie sortiert deine Dokumente.
+                  Die App sortiert <br /> deine Dokumente.
                 </li>
               </ul>
             </div>
-            <div className="flex flex-col gap-4 max-w-sm">
+            <div className="flex flex-col gap-2 max-w-sm">
               <a
                 className="rounded-full text-center bg-black-800 text-white py-4 px-8 hover:bg-black-800/90"
                 href="https://www.zetteln.app/AppWaitlist"
@@ -230,12 +249,14 @@ function App() {
             <div className="text-red-600 text-4xl w-20 h-20 rounded-full bg-red-100 flex items-center justify-center mx-auto mb-4">
               ✕
             </div>
-            <h2 className="text-slate-800 text-2xl mb-4">
-              Document Not Recognized
+            <h2 className="text-slate-800 text-xl mb-4">
+              Ohje, das kann ich noch nicht lesen.
             </h2>
             <p className="text-gray-500 text-base leading-relaxed mb-6">
-              The scanned document doesn't match our reference. Please try again
-              with better lighting or a clearer image.
+              Dies ist eine Demo-Version mit der nur freigegebenen Dokumente
+              gesannt werden können.{" "}
+              <a href="mailto:lena@zetteln.app">Schreibe uns</a> und erzähle uns
+              von deinem Anwendungsfall!
             </p>
             {matchPercentage > 0 && (
               <p className="text-gray-500 text-sm my-4">
@@ -243,21 +264,14 @@ function App() {
               </p>
             )}
             <button
-              className="bg-blue-500 text-white border-0 rounded-lg py-4 px-8 text-lg font-semibold cursor-pointer transition-colors w-full max-w-xs shadow-md hover:bg-blue-600 active:translate-y-px"
+              className="rounded-full text-center bg-black-800 text-white py-4 px-8 hover:bg-black-800/90"
               onClick={handleReset}
             >
-              Try Again
+              Neues Dokument scannen
             </button>
           </div>
         )}
       </main>
-
-      <footer className="bg-white text-gray-400 p-4 text-center text-sm">
-        <p className="m-0">
-          Mehr erfahren auf{" "}
-          <a href="https://www.zetteln.app/">www.zetteln.app</a>
-        </p>
-      </footer>
     </div>
   );
 }
