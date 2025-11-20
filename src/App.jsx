@@ -80,7 +80,7 @@ function App() {
 
   return (
     <div className="min-h-screen  bg-sand-100 flex justify-between flex-col">
-      <header className="pt-4 text-center ">
+      <header className="pt-4 text-center mb-8">
         <h1 className="text-2xl ">zetteln</h1>
       </header>
 
@@ -134,16 +134,19 @@ function App() {
         )}
 
         {state === "success" && (
-          <div className="w-full flex flex-col gap-8  text-xl">
-            <div className="flex bg-white max-w-md m-4 p-4 rounded-2xl flex-col text-lg gap-3">
+          <div className="w-full flex flex-col  gap-4  text-xl">
+            <div className="w-full max-w-md mx-auto ">
+              <h1 className="text-4xl text-center">Dein Dokument</h1>
+            </div>
+            <div className="flex bg-white max-w-md w-full mx-auto  m-4 p-4 rounded-2xl flex-col text-lg gap-2">
               <div className="flex  justify-between">
                 <p>Wie schwierig?</p>
                 <div className="flex gap-2">
-                  <div className="h-6 w-6 bg-sand-100 rounded-full">
+                  <div className="h-6 w-6 bg-gray-200 rounded-full">
                     <div className="h-6 w-3 bg-blue-400 rounded-l-full"></div>
                   </div>
-                  <div className="h-6 w-6 bg-sand-100 rounded-full"></div>
-                  <div className="h-6 w-6 bg-sand-100 rounded-full"></div>
+                  <div className="h-6 w-6 bg-gray-200 rounded-full"></div>
+                  <div className="h-6 w-6 bg-gray-200 rounded-full"></div>
                 </div>
               </div>
               <div className="flex  justify-between">
@@ -151,79 +154,92 @@ function App() {
                 <div className="flex gap-2">
                   <div className="h-6 w-6 bg-blue-400 rounded-full"></div>
                   <div className="h-6 w-6 bg-blue-400 rounded-full"></div>
-                  <div className="h-6 w-6 bg-sand-100 rounded-full">
+                  <div className="h-6 w-6 bg-gray-200 rounded-full">
                     <div className="h-6 w-3 bg-blue-400 rounded-l-full"></div>
                   </div>
                 </div>
               </div>
             </div>
-
-            <div className="flex px-4 flex-col gap-6">
-              <div className="flex text-xl flex-col gap-2">
-                <h3 className="font-semibold">Unser Ziel</h3>
-                <p className=" ">
-                  Unsere App hilft dir,
-                  <br />
-                  schwierigen Briefe zu verstehen.
-                </p>
+            <div className="w-full max-w-md mx-auto ">
+              <h2 className="text-2xl text-center ">Das wird gesagt</h2>
+            </div>
+            <div className="flex rotate-2 relative bg-white w-full p-12 py-16 rounded-2xl max-w-md mx-auto flex-col gap-6">
+              <div className="absolute top-0 right-0 bg-sand-100 rounded-rt-2xl border border-sand-100">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="56"
+                  height="56"
+                  viewBox="0 0 56 56"
+                  fill="none"
+                >
+                  <path
+                    d="M4 56H56L0 0V52C0 54.2091 1.79086 56 4 56Z"
+                    fill="#28292D"
+                  />
+                </svg>
               </div>
-              <ul className="text-xl flex flex-col gap-4">
-                <li className="flex gap-4 items-center">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="21"
-                    viewBox="0 0 24 21"
-                    fill="none"
-                  >
-                    <path
-                      d="M14.25 1.41431L23 10.1643M23 10.1643L14.25 18.9143M23 10.1643H1"
-                      stroke="#66A5F4"
-                      stroke-width="2"
-                      stroke-linecap="square"
-                      stroke-linejoin="round"
-                    />
-                  </svg>
-                  Die App erklärt Briefe <br /> in einfacher Sprache.
-                </li>
-                <li className="flex gap-4 items-center">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="21"
-                    viewBox="0 0 24 21"
-                    fill="none"
-                  >
-                    <path
-                      d="M14.25 1.41431L23 10.1643M23 10.1643L14.25 18.9143M23 10.1643H1"
-                      stroke="#66A5F4"
-                      stroke-width="2"
-                      stroke-linecap="square"
-                      stroke-linejoin="round"
-                    />
-                  </svg>
-                  Die App hilft beim Ausfüllen <br />
-                  von Formularen
-                </li>
-                <li className="flex gap-4 items-center">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="21"
-                    viewBox="0 0 24 21"
-                    fill="none"
-                  >
-                    <path
-                      d="M14.25 1.41431L23 10.1643M23 10.1643L14.25 18.9143M23 10.1643H1"
-                      stroke="#66A5F4"
-                      stroke-width="2"
-                      stroke-linecap="square"
-                      stroke-linejoin="round"
-                    />
-                  </svg>
-                  Die App sortiert <br /> deine Dokumente.
-                </li>
-              </ul>
+              <div className="-rotate-2 flex flex-col gap-6">
+                <div className="flex  flex-col gap-1">
+                  <h3 className="font-semibold">Unser Ziel</h3>
+                  <p>Unsere App hilft dir, schwierigen Briefe zu verstehen.</p>
+                </div>
+                <ul className="text-xl flex flex-col gap-3">
+                  <li className="flex gap-4 items-center">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="21"
+                      viewBox="0 0 24 21"
+                      fill="none"
+                    >
+                      <path
+                        d="M14.25 1.41431L23 10.1643M23 10.1643L14.25 18.9143M23 10.1643H1"
+                        stroke="#66A5F4"
+                        stroke-width="2"
+                        stroke-linecap="square"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                    Die App erklärt Briefe in einfacher Sprache.
+                  </li>
+                  <li className="flex gap-4 items-center">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="21"
+                      viewBox="0 0 24 21"
+                      fill="none"
+                    >
+                      <path
+                        d="M14.25 1.41431L23 10.1643M23 10.1643L14.25 18.9143M23 10.1643H1"
+                        stroke="#66A5F4"
+                        stroke-width="2"
+                        stroke-linecap="square"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                    Die App hilft beim Ausfüllen von Formularen
+                  </li>
+                  <li className="flex gap-4 items-center">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="21"
+                      viewBox="0 0 24 21"
+                      fill="none"
+                    >
+                      <path
+                        d="M14.25 1.41431L23 10.1643M23 10.1643L14.25 18.9143M23 10.1643H1"
+                        stroke="#66A5F4"
+                        stroke-width="2"
+                        stroke-linecap="square"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                    Die App sortiert deine Dokumente.
+                  </li>
+                </ul>
+              </div>
             </div>
             <div className="  flex flex-col gap-2 items-center p-4 w-screen">
               <h2>Dir gefällt die App ?</h2>
@@ -232,7 +248,7 @@ function App() {
                   className="rounded-full  text-center bg-black-800 text-white py-4 px-8 hover:bg-black-800/90"
                   href="https://www.zetteln.app/AppWaitlist"
                 >
-                  Warteliste
+                  App testen
                 </a>
                 <a
                   className="rounded-full text-center border-solid border-black-800 border-1 hover:bg-black-800/10  py-4 px-8 "
