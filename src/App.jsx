@@ -323,7 +323,7 @@ function App() {
                 </div>
                 <ul className="text-xl flex flex-col gap-3">
                   {translations[selectedLanguage].items.map((item, index) => (
-                    <li key={index} className={`flex gap-4 items-center ${isRTL ? "flex-row-reverse" : ""}`}>
+                    <li key={index} className="flex gap-4 items-center">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="24"
