@@ -160,7 +160,10 @@ function App() {
                 </div>
               </div>
             </div>
-            <div className="w-full max-w-md mx-auto ">
+            <div className="w-full max-w-md mx-auto flex items-center gap-4 ">
+              <div className="h-12 w-12 rounded-full flex justify-center items-center bg-white">
+                🇩🇪
+              </div>
               <h2 className="text-2xl text-center ">Das wird gesagt</h2>
             </div>
             <div className="flex rotate-2 relative bg-white w-full p-12 py-16 rounded-2xl max-w-md mx-auto flex-col gap-6">
