@@ -330,6 +330,7 @@ function App() {
                         height="21"
                         viewBox="0 0 24 21"
                         fill="none"
+                        style={isRTL ? { transform: 'scaleX(-1)' } : {}}
                       >
                         <path
                           d="M14.25 1.41431L23 10.1643M23 10.1643L14.25 18.9143M23 10.1643H1"
