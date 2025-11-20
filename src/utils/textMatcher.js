@@ -8,10 +8,10 @@ export function normalizeText(text) {
   const lowerCase = text.toLowerCase();
 
   // Remove punctuation and special characters, keep only letters, numbers, and spaces
-  const noPunctuation = lowerCase.replace(/[^\w\säöüß]/g, ' ');
+  const noPunctuation = lowerCase.replace(/[^\w\säöüß]/g, " ");
 
   // Split into words and filter out empty strings
-  const words = noPunctuation.split(/\s+/).filter(word => word.length > 0);
+  const words = noPunctuation.split(/\s+/).filter((word) => word.length > 0);
 
   return words;
 }
@@ -52,11 +52,15 @@ export function calculateMatchPercentage(extractedText, referenceText) {
  * @param {number} threshold - Minimum match percentage required (0-1)
  * @returns {object} - { isMatch: boolean, percentage: number }
  */
-export function validateDocument(extractedText, referenceText, threshold = 0.7) {
+export function validateDocument(
+  extractedText,
+  referenceText,
+  threshold = 0.6
+) {
   const percentage = calculateMatchPercentage(extractedText, referenceText);
 
   return {
     isMatch: percentage >= threshold,
-    percentage: percentage
+    percentage: percentage,
   };
 }
