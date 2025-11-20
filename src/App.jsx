@@ -91,7 +91,8 @@ function App() {
     },
     fr: {
       title: "Notre objectif",
-      description: "Notre application vous aide à comprendre les lettres difficiles.",
+      description:
+        "Notre application vous aide à comprendre les lettres difficiles.",
       items: [
         "L'application explique les lettres dans un langage simple.",
         "L'application aide à remplir les formulaires",
@@ -100,7 +101,8 @@ function App() {
     },
     ro: {
       title: "Scopul nostru",
-      description: "Aplicația noastră te ajută să înțelegi scrisorile dificile.",
+      description:
+        "Aplicația noastră te ajută să înțelegi scrisorile dificile.",
       items: [
         "Aplicația explică scrisorile într-un limbaj simplu.",
         "Aplicația ajută la completarea formularelor",
@@ -199,7 +201,8 @@ function App() {
         {state === "initial" && (
           <div className="w-full  gap-16 max-w-md px-16 flex justify-center items-center flex-col   text-center">
             <h2 className="text-slate-800 text-xl mb-4">
-              Du möchtest ein schwierigen Text besser verstehen.
+              Du möchtest einen <strong>schwierigen Text</strong> besser{" "}
+              <strong>verstehen</strong>?
             </h2>
             <div className="text-6xl w-40 h-40 bg-white rounded-full flex justify-center items-center  mb-4">
               📄
@@ -277,7 +280,10 @@ function App() {
                   onClick={() => setShowLanguageMenu(!showLanguageMenu)}
                   className="h-12 w-12 rounded-full flex justify-center items-center bg-white hover:bg-gray-50 transition-colors text-2xl cursor-pointer border-2 border-gray-200"
                 >
-                  {languages.find((lang) => lang.code === selectedLanguage)?.flag}
+                  {
+                    languages.find((lang) => lang.code === selectedLanguage)
+                      ?.flag
+                  }
                 </button>
                 {showLanguageMenu && (
                   <div className="absolute top-14 left-0 bg-white rounded-xl shadow-lg border border-gray-200 p-2 z-10 min-w-[200px]">
@@ -316,9 +322,14 @@ function App() {
                   />
                 </svg>
               </div>
-              <div className="-rotate-2 flex flex-col gap-6" dir={isRTL ? "rtl" : "ltr"}>
+              <div
+                className="-rotate-2 flex flex-col gap-6"
+                dir={isRTL ? "rtl" : "ltr"}
+              >
                 <div className="flex  flex-col gap-1">
-                  <h3 className="font-semibold">{translations[selectedLanguage].title}</h3>
+                  <h3 className="font-semibold">
+                    {translations[selectedLanguage].title}
+                  </h3>
                   <p>{translations[selectedLanguage].description}</p>
                 </div>
                 <ul className="text-xl flex flex-col gap-3">
@@ -330,7 +341,7 @@ function App() {
                         height="21"
                         viewBox="0 0 24 21"
                         fill="none"
-                        style={isRTL ? { transform: 'scaleX(-1)' } : {}}
+                        style={isRTL ? { transform: "scaleX(-1)" } : {}}
                       >
                         <path
                           d="M14.25 1.41431L23 10.1643M23 10.1643L14.25 18.9143M23 10.1643H1"
@@ -347,7 +358,7 @@ function App() {
               </div>
             </div>
             <div className="  flex flex-col gap-2 items-center p-4 w-screen">
-              <h2>Dir gefällt die App ?</h2>
+              <h2>Dir gefällt die Idee?</h2>
               <div className="flex flex-col gap-2 w-full max-w-sm">
                 <a
                   className="rounded-full  text-center bg-black-800 text-white py-4 px-8 hover:bg-black-800/90"
