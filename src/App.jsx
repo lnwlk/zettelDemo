@@ -118,6 +118,9 @@ function App() {
     },
   };
 
+  // Check if current language is RTL
+  const isRTL = selectedLanguage === "ar" || selectedLanguage === "fa";
+
   const handleScanClick = () => {
     fileInputRef.current?.click();
   };
@@ -313,14 +316,14 @@ function App() {
                   />
                 </svg>
               </div>
-              <div className="-rotate-2 flex flex-col gap-6">
+              <div className="-rotate-2 flex flex-col gap-6" dir={isRTL ? "rtl" : "ltr"}>
                 <div className="flex  flex-col gap-1">
                   <h3 className="font-semibold">{translations[selectedLanguage].title}</h3>
                   <p>{translations[selectedLanguage].description}</p>
                 </div>
                 <ul className="text-xl flex flex-col gap-3">
                   {translations[selectedLanguage].items.map((item, index) => (
-                    <li key={index} className="flex gap-4 items-center">
+                    <li key={index} className={`flex gap-4 items-center ${isRTL ? "flex-row-reverse" : ""}`}>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="24"
