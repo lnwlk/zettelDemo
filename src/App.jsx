@@ -79,12 +79,12 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen  bg-sand-100 flex justify-between flex-col">
+    <div className="min-h-screen max-w-screen overflow-hidden  bg-sand-100 flex justify-between flex-col">
       <header className="pt-4 text-center mb-8">
         <h1 className="text-2xl ">zetteln</h1>
       </header>
 
-      <main className="flex-1 flex  mx-auto items-center justify-center ">
+      <main className="flex-1 flex px-2 w-full mx-auto items-center justify-center ">
         {state === "initial" && (
           <div className="w-full  gap-16 max-w-md px-16 flex justify-center items-center flex-col   text-center">
             <h2 className="text-slate-800 text-xl mb-4">
