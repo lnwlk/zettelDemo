@@ -8,7 +8,115 @@ function App() {
   const [capturedImage, setCapturedImage] = useState(null);
   const [progress, setProgress] = useState(0);
   const [matchPercentage, setMatchPercentage] = useState(0);
+  const [selectedLanguage, setSelectedLanguage] = useState("de");
+  const [showLanguageMenu, setShowLanguageMenu] = useState(false);
   const fileInputRef = useRef(null);
+
+  const languages = [
+    { code: "de", name: "Deutsch", flag: "🇩🇪" },
+    { code: "en", name: "English", flag: "🇬🇧" },
+    { code: "ar", name: "العربية", flag: "🇸🇦" },
+    { code: "tr", name: "Türkçe", flag: "🇹🇷" },
+    { code: "uk", name: "Українська", flag: "🇺🇦" },
+    { code: "ru", name: "Русский", flag: "🇷🇺" },
+    { code: "fa", name: "فارسی", flag: "🇮🇷" },
+    { code: "fr", name: "français", flag: "🇫🇷" },
+    { code: "ro", name: "română", flag: "🇷🇴" },
+    { code: "zh", name: "中文", flag: "🇨🇳" },
+  ];
+
+  const translations = {
+    de: {
+      title: "Unser Ziel",
+      description: "Unsere App hilft dir, schwierigen Briefe zu verstehen.",
+      items: [
+        "Die App erklärt Briefe in einfacher Sprache.",
+        "Die App hilft beim Ausfüllen von Formularen",
+        "Die App sortiert deine Dokumente.",
+      ],
+    },
+    en: {
+      title: "Our Goal",
+      description: "Our app helps you understand difficult letters.",
+      items: [
+        "The app explains letters in simple language.",
+        "The app helps you fill out forms",
+        "The app organizes your documents.",
+      ],
+    },
+    ar: {
+      title: "هدفنا",
+      description: "تساعدك تطبيقنا على فهم الرسائل الصعبة.",
+      items: [
+        "يشرح التطبيق الرسائل بلغة بسيطة.",
+        "يساعد التطبيق في ملء النماذج",
+        "ينظم التطبيق مستنداتك.",
+      ],
+    },
+    tr: {
+      title: "Hedefimiz",
+      description: "Uygulamamız zor mektupları anlamanıza yardımcı olur.",
+      items: [
+        "Uygulama mektupları basit bir dille açıklar.",
+        "Uygulama formları doldurmanıza yardımcı olur",
+        "Uygulama belgelerinizi düzenler.",
+      ],
+    },
+    uk: {
+      title: "Наша мета",
+      description: "Наш додаток допомагає розуміти складні листи.",
+      items: [
+        "Додаток пояснює листи простою мовою.",
+        "Додаток допомагає заповнювати форми",
+        "Додаток сортує ваші документи.",
+      ],
+    },
+    ru: {
+      title: "Наша цель",
+      description: "Наше приложение помогает понимать сложные письма.",
+      items: [
+        "Приложение объясняет письма простым языком.",
+        "Приложение помогает заполнять формы",
+        "Приложение сортирует ваши документы.",
+      ],
+    },
+    fa: {
+      title: "هدف ما",
+      description: "برنامه ما به شما کمک می‌کند نامه‌های دشوار را درک کنید.",
+      items: [
+        "برنامه نامه‌ها را به زبان ساده توضیح می‌دهد.",
+        "برنامه به پر کردن فرم‌ها کمک می‌کند",
+        "برنامه اسناد شما را مرتب می‌کند.",
+      ],
+    },
+    fr: {
+      title: "Notre objectif",
+      description: "Notre application vous aide à comprendre les lettres difficiles.",
+      items: [
+        "L'application explique les lettres dans un langage simple.",
+        "L'application aide à remplir les formulaires",
+        "L'application organise vos documents.",
+      ],
+    },
+    ro: {
+      title: "Scopul nostru",
+      description: "Aplicația noastră te ajută să înțelegi scrisorile dificile.",
+      items: [
+        "Aplicația explică scrisorile într-un limbaj simplu.",
+        "Aplicația ajută la completarea formularelor",
+        "Aplicația organizează documentele tale.",
+      ],
+    },
+    zh: {
+      title: "我们的目标",
+      description: "我们的应用帮助您理解困难的信件。",
+      items: [
+        "该应用用简单的语言解释信件。",
+        "该应用帮助填写表格",
+        "该应用整理您的文档。",
+      ],
+    },
+  };
 
   const handleScanClick = () => {
     fileInputRef.current?.click();
@@ -161,8 +269,32 @@ function App() {
               </div>
             </div>
             <div className="w-full max-w-md mx-auto flex items-center gap-4 ">
-              <div className="h-12 w-12 rounded-full flex justify-center items-center bg-white">
-                🇩🇪
+              <div className="relative">
+                <button
+                  onClick={() => setShowLanguageMenu(!showLanguageMenu)}
+                  className="h-12 w-12 rounded-full flex justify-center items-center bg-white hover:bg-gray-50 transition-colors text-2xl cursor-pointer border-2 border-gray-200"
+                >
+                  {languages.find((lang) => lang.code === selectedLanguage)?.flag}
+                </button>
+                {showLanguageMenu && (
+                  <div className="absolute top-14 left-0 bg-white rounded-xl shadow-lg border border-gray-200 p-2 z-10 min-w-[200px]">
+                    {languages.map((lang) => (
+                      <button
+                        key={lang.code}
+                        onClick={() => {
+                          setSelectedLanguage(lang.code);
+                          setShowLanguageMenu(false);
+                        }}
+                        className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-100 transition-colors ${
+                          selectedLanguage === lang.code ? "bg-blue-50" : ""
+                        }`}
+                      >
+                        <span className="text-2xl">{lang.flag}</span>
+                        <span className="text-lg">{lang.name}</span>
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
               <h2 className="text-2xl text-center ">Das wird gesagt</h2>
             </div>
@@ -183,64 +315,30 @@ function App() {
               </div>
               <div className="-rotate-2 flex flex-col gap-6">
                 <div className="flex  flex-col gap-1">
-                  <h3 className="font-semibold">Unser Ziel</h3>
-                  <p>Unsere App hilft dir, schwierigen Briefe zu verstehen.</p>
+                  <h3 className="font-semibold">{translations[selectedLanguage].title}</h3>
+                  <p>{translations[selectedLanguage].description}</p>
                 </div>
                 <ul className="text-xl flex flex-col gap-3">
-                  <li className="flex gap-4 items-center">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="21"
-                      viewBox="0 0 24 21"
-                      fill="none"
-                    >
-                      <path
-                        d="M14.25 1.41431L23 10.1643M23 10.1643L14.25 18.9143M23 10.1643H1"
-                        stroke="#66A5F4"
-                        stroke-width="2"
-                        stroke-linecap="square"
-                        stroke-linejoin="round"
-                      />
-                    </svg>
-                    Die App erklärt Briefe in einfacher Sprache.
-                  </li>
-                  <li className="flex gap-4 items-center">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="21"
-                      viewBox="0 0 24 21"
-                      fill="none"
-                    >
-                      <path
-                        d="M14.25 1.41431L23 10.1643M23 10.1643L14.25 18.9143M23 10.1643H1"
-                        stroke="#66A5F4"
-                        stroke-width="2"
-                        stroke-linecap="square"
-                        stroke-linejoin="round"
-                      />
-                    </svg>
-                    Die App hilft beim Ausfüllen von Formularen
-                  </li>
-                  <li className="flex gap-4 items-center">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="21"
-                      viewBox="0 0 24 21"
-                      fill="none"
-                    >
-                      <path
-                        d="M14.25 1.41431L23 10.1643M23 10.1643L14.25 18.9143M23 10.1643H1"
-                        stroke="#66A5F4"
-                        stroke-width="2"
-                        stroke-linecap="square"
-                        stroke-linejoin="round"
-                      />
-                    </svg>
-                    Die App sortiert deine Dokumente.
-                  </li>
+                  {translations[selectedLanguage].items.map((item, index) => (
+                    <li key={index} className="flex gap-4 items-center">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="21"
+                        viewBox="0 0 24 21"
+                        fill="none"
+                      >
+                        <path
+                          d="M14.25 1.41431L23 10.1643M23 10.1643L14.25 18.9143M23 10.1643H1"
+                          stroke="#66A5F4"
+                          strokeWidth="2"
+                          strokeLinecap="square"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                      {item}
+                    </li>
+                  ))}
                 </ul>
               </div>
             </div>
