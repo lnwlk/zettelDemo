@@ -249,7 +249,7 @@ function App() {
 
         {state === "success" && (
           <div className="w-full flex flex-col  gap-12  text-xl">
-            <div className="w-full flex flex-col  gap-4  text-xl">
+            <div className="w-full flex flex-col px-2 gap-4  text-xl">
               <div className="flex gap-4  w-full max-w-md mx-auto items-center">
                 <img
                   className="h-32 bg-white  border-2 rounded-xl shadow-2xl -rotate-2"
@@ -257,14 +257,14 @@ function App() {
                   alt="Vorschau deines Dokuments"
                 />
                 <div>
-                  <h1 className="text-3xl pb-2">Dein Dokument</h1>
+                  <h1 className="text-3xl font-semibold pb-2">Dein Dokument</h1>
                   <div className="flex gap-3 text-blue-400 items-center ">
                     <div className="flex gap-1">
-                      <div className="h-4 w-4 bg-gray-200 rounded-full">
+                      <div className="h-4 w-4 bg-black/5 rounded-full">
                         <div className="h-4 w-2 bg-blue-400 rounded-l-full"></div>
                       </div>
-                      <div className="h-4 w-4 bg-gray-200 rounded-full"></div>
-                      <div className="h-4 w-4 bg-gray-200 rounded-full"></div>
+                      <div className="h-4 w-4 bg-black/5 rounded-full"></div>
+                      <div className="h-4 w-4 bg-black/5 rounded-full"></div>
                     </div>
                     <p>einfach</p>
                   </div>
@@ -272,7 +272,7 @@ function App() {
                     <div className="flex gap-1">
                       <div className="h-4 w-4 bg-red-400 rounded-full"></div>
                       <div className="h-4 w-4 bg-red-400 rounded-full"></div>
-                      <div className="h-4 w-4 bg-gray-200 rounded-full">
+                      <div className="h-4 w-4 bg-black/5 rounded-full">
                         <div className="h-4 w-2 bg-red-400 rounded-l-full"></div>
                       </div>
                     </div>
@@ -282,13 +282,15 @@ function App() {
               </div>
             </div>
 
-            <div>
-              <div className="w-full max-w-md mx-auto flex pb-2 items-center justify-between gap-4 ">
-                <h2 className="text-2xl text-center ">Das wird gesagt</h2>
+            <div className="px-4">
+              <div className="w-full max-w-md mx-auto flex pb-4 items-center justify-between gap-4 ">
+                <h2 className="text-xl font-semibold text-center ">
+                  Das wird gesagt
+                </h2>
                 <div className="relative">
                   <button
                     onClick={() => setShowLanguageMenu(!showLanguageMenu)}
-                    className="h-12 w-12 rounded-full flex justify-center items-center bg-white hover:bg-gray-50 transition-colors text-2xl cursor-pointer border-2 border-gray-200"
+                    className="h-12 w-12 rounded-full flex justify-center items-center bg-white shadow-2xl hover:bg-gray-50 transition-colors text-2xl cursor-pointer "
                   >
                     {
                       languages.find((lang) => lang.code === selectedLanguage)
@@ -316,73 +318,62 @@ function App() {
                   )}
                 </div>
               </div>
-              <div className="flex  relative bg-white w-full p-8 py-16 rounded-2xl max-w-md mx-auto flex-col gap-6">
-                <div className="absolute shrink-0 top-0 right-0 bg-sand-100 rounded-rt-2xl border border-sand-100">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="56"
-                    height="56"
-                    viewBox="0 0 56 56"
-                    fill="none"
-                    className="shrink-0"
+              <div className="rotate-3 rounded-2xl border">
+                <div className="flex -rotate-5  relative bg-sand-100  border-black border w-full p-6 py-16 rounded-2xl max-w-md mx-auto flex-col gap-6">
+                  <div
+                    className=" flex shrink-0 rotate-2 flex-col gap-6"
+                    dir={isRTL ? "rtl" : "ltr"}
                   >
-                    <path
-                      d="M4 56H56L0 0V52C0 54.2091 1.79086 56 4 56Z"
-                      fill="#28292D"
-                    />
-                  </svg>
-                </div>
-                <div
-                  className=" flex shrink-0 flex-col gap-6"
-                  dir={isRTL ? "rtl" : "ltr"}
-                >
-                  <div className="flex  flex-col gap-1">
-                    <h3 className="font-semibold">
-                      {translations[selectedLanguage].title}
-                    </h3>
-                    <p>{translations[selectedLanguage].description}</p>
+                    <div className="flex  flex-col gap-1">
+                      <h3 className="font-semibold">
+                        {translations[selectedLanguage].title}
+                      </h3>
+                      <p>{translations[selectedLanguage].description}</p>
+                    </div>
+                    <ul className="text-xl flex flex-col gap-3">
+                      {translations[selectedLanguage].items.map(
+                        (item, index) => (
+                          <li
+                            key={index}
+                            className="flex gap-4 shrink-0 items-center"
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="24"
+                              height="21"
+                              viewBox="0 0 24 21"
+                              fill="none"
+                              className="shrink-0"
+                              style={isRTL ? { transform: "scaleX(-1) " } : {}}
+                            >
+                              <path
+                                d="M14.25 1.41431L23 10.1643M23 10.1643L14.25 18.9143M23 10.1643H1"
+                                stroke="#66A5F4"
+                                strokeWidth="2"
+                                strokeLinecap="square"
+                                strokeLinejoin="round"
+                              />
+                            </svg>
+                            {item}
+                          </li>
+                        )
+                      )}
+                    </ul>
                   </div>
-                  <ul className="text-xl flex flex-col gap-3">
-                    {translations[selectedLanguage].items.map((item, index) => (
-                      <li
-                        key={index}
-                        className="flex gap-4 shrink-0 items-center"
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="24"
-                          height="21"
-                          viewBox="0 0 24 21"
-                          fill="none"
-                          className="shrink-0"
-                          style={isRTL ? { transform: "scaleX(-1) " } : {}}
-                        >
-                          <path
-                            d="M14.25 1.41431L23 10.1643M23 10.1643L14.25 18.9143M23 10.1643H1"
-                            stroke="#66A5F4"
-                            strokeWidth="2"
-                            strokeLinecap="square"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
                 </div>
               </div>
             </div>
-            <div className="  flex flex-col gap-2 items-center p-4 w-screen">
-              <h2>Dir gefällt die Idee?</h2>
-              <div className="flex flex-col gap-2 w-full max-w-sm">
+            <div className=" justify-center mb-12 w-full max-w-xs flex flex-col gap-2 text-base items-center  mx-auto">
+              <h2 className="font-semibold ">Dir gefällt die Idee?</h2>
+              <div className="flex flex-col gap-2 w-full ">
                 <a
-                  className="rounded-full  text-center bg-black-800 text-white py-4 px-8 hover:bg-black-800/90"
+                  className="rounded-full  text-center bg-black-800 text-white py-3 px-6 hover:bg-black-800/90"
                   href="https://www.zetteln.app/AppWaitlist"
                 >
                   App testen
                 </a>
                 <a
-                  className="rounded-full text-center border-solid border-black-800 border-1 hover:bg-black-800/10  py-4 px-8 "
+                  className="rounded-full text-center  border-solid border-black-800 border-1 hover:bg-black-800/10  py-3 px-6 "
                   href="https://www.zetteln.app/"
                 >
                   Mehr über zetteln
