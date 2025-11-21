@@ -250,7 +250,7 @@ function App() {
         {state === "success" && (
           <div className="w-full flex flex-col  gap-12  text-xl">
             <div className="w-full flex flex-col  gap-4  text-xl">
-              <div className="flex gap-4  items-center">
+              <div className="flex gap-4  w-full max-w-md mx-auto items-center">
                 <img
                   className="h-32 bg-white  border-2 rounded-xl shadow-2xl -rotate-2"
                   src={capturedImage}
