@@ -199,8 +199,8 @@ function App() {
 
       <main className="flex-1 flex px-2 w-full mx-auto items-center justify-center ">
         {state === "initial" && (
-          <div className="w-full  gap-16 max-w-md px-16 flex justify-center items-center flex-col   text-center">
-            <h2 className="text-slate-800 text-xl mb-4">
+          <div className="w-full  gap-16  px-4 flex justify-center items-center flex-col   text-center">
+            <h2 className="  text-3xl mb-4">
               Du möchtest einen <strong>schwierigen Text</strong> besser{" "}
               <strong>verstehen</strong>?
             </h2>
@@ -208,7 +208,7 @@ function App() {
               📄
             </div>
             <button
-              className="bg-black-800 text-white border-0 rounded-full py-4 px-8 text-lg font-semibold cursor-pointer transition-colors w-full max-w-xs shadow-md hover:bg-black/80 active:translate-y-px"
+              className="bg-black-800 text-white border-0 rounded-full py-4 px-8 text-xl  cursor-pointer transition-colors w-full max-w-xs shadow-md hover:bg-black/80 active:translate-y-px"
               onClick={handleScanClick}
             >
               Foto machen
@@ -236,7 +236,7 @@ function App() {
               </div>
             )}
             <div className="border-4 border-gray-200 border-t-blue-500 rounded-full w-12 h-12 animate-spin mx-auto mb-4"></div>
-            <h2 className="text-slate-800 text-2xl mb-4">Dokument lesen...</h2>
+            <h2 className="text-slate-800 text-xl mb-4">Dokument lesen...</h2>
             <div className="w-full h-2 bg-gray-200 rounded overflow-hidden my-4">
               <div
                 className="h-full bg-blue-500 transition-all duration-300"
