@@ -105,15 +105,40 @@ export function calculateSimilarity(str1, str2) {
 export function findFuzzyMatch(keyword, ocrText, similarityThreshold = 0.80) {
   const normalizedKeyword = keyword.toLowerCase();
   const ocrWords = normalizeText(ocrText);
+  const keywordLength = normalizedKeyword.length;
 
   let bestMatch = null;
   let bestSimilarity = 0;
 
   for (const word of ocrWords) {
+    // Quick exact match check first (no Levenshtein needed)
+    if (word === normalizedKeyword) {
+      return {
+        isMatch: true,
+        bestMatch: word,
+        similarity: 1.0,
+        keyword: keyword
+      };
+    }
+
+    // Length filter: Skip words that are too different in length
+    // For 70% similarity, length difference can't be more than 30%
+    const lengthDiff = Math.abs(word.length - keywordLength);
+    const maxLengthDiff = Math.ceil(keywordLength * 0.3);
+    if (lengthDiff > maxLengthDiff) {
+      continue; // Skip this word
+    }
+
+    // Now do the expensive Levenshtein calculation
     const similarity = calculateSimilarity(normalizedKeyword, word);
     if (similarity > bestSimilarity) {
       bestSimilarity = similarity;
       bestMatch = word;
+
+      // Early termination: if we found a very good match, stop searching
+      if (bestSimilarity >= 0.95) {
+        break;
+      }
     }
   }
 
