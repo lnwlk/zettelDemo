@@ -8,6 +8,8 @@ function App() {
   const [capturedImage, setCapturedImage] = useState(null);
   const [progress, setProgress] = useState(0);
   const [matchPercentage, setMatchPercentage] = useState(0);
+  const [ocrTime, setOcrTime] = useState(0);
+  const [matchTime, setMatchTime] = useState(0);
   const [selectedLanguage, setSelectedLanguage] = useState("de");
   const [showLanguageMenu, setShowLanguageMenu] = useState(false);
   const fileInputRef = useRef(null);
@@ -156,7 +158,9 @@ function App() {
       } = await worker.recognize(file);
       await worker.terminate();
       const ocrEndTime = performance.now();
-      console.log(`⏱️ OCR took: ${(ocrEndTime - ocrStartTime).toFixed(0)}ms`);
+      const ocrDuration = Math.round(ocrEndTime - ocrStartTime);
+      setOcrTime(ocrDuration);
+      console.log(`⏱️ OCR took: ${ocrDuration}ms`);
 
       console.log("Extracted text:", text);
 
@@ -173,7 +177,9 @@ function App() {
         );
         setMatchPercentage(Math.round(result.percentage * 100));
         const matchEndTime = performance.now();
-        console.log(`⚡ Fuzzy matching took: ${(matchEndTime - matchStartTime).toFixed(0)}ms`);
+        const matchDuration = Math.round(matchEndTime - matchStartTime);
+        setMatchTime(matchDuration);
+        console.log(`⚡ Fuzzy matching took: ${matchDuration}ms`);
         console.log("Fuzzy keyword match result:", result);
         console.log("Matched keywords:", result.matches.filter(m => m.isMatch).map(m =>
           `${m.keyword} → ${m.bestMatch} (${Math.round(m.similarity * 100)}%)`
@@ -187,7 +193,9 @@ function App() {
         );
         setMatchPercentage(Math.round(result.percentage * 100));
         const matchEndTime = performance.now();
-        console.log(`⚡ Traditional matching took: ${(matchEndTime - matchStartTime).toFixed(0)}ms`);
+        const matchDuration = Math.round(matchEndTime - matchStartTime);
+        setMatchTime(matchDuration);
+        console.log(`⚡ Traditional matching took: ${matchDuration}ms`);
         console.log("Traditional match result:", result);
       }
 
@@ -210,6 +218,8 @@ function App() {
     setCapturedImage(null);
     setProgress(0);
     setMatchPercentage(0);
+    setOcrTime(0);
+    setMatchTime(0);
     if (capturedImage) {
       URL.revokeObjectURL(capturedImage);
     }
@@ -424,13 +434,20 @@ function App() {
               und erzähle uns von deinem Anwendungsfall!
             </p>
             {matchPercentage > 0 && (
-              <p className="text-gray-500 text-sm my-4">
-                {config.fuzzyMatchingEnabled ? (
-                  <>Match: {matchPercentage}% ({config.minKeywordsRequired} of {config.keywords.length} keywords required)</>
-                ) : (
-                  <>Match: {matchPercentage}% (minimum {Math.round(config.matchThreshold * 100)}% required)</>
+              <div className="text-gray-500 text-sm my-4">
+                <p>
+                  {config.fuzzyMatchingEnabled ? (
+                    <>Match: {matchPercentage}% ({config.minKeywordsRequired} of {config.keywords.length} keywords required)</>
+                  ) : (
+                    <>Match: {matchPercentage}% (minimum {Math.round(config.matchThreshold * 100)}% required)</>
+                  )}
+                </p>
+                {(ocrTime > 0 || matchTime > 0) && (
+                  <p className="text-xs mt-2 text-gray-400">
+                    ⏱️ OCR: {(ocrTime / 1000).toFixed(1)}s | ⚡ Matching: {matchTime}ms
+                  </p>
                 )}
-              </p>
+              </div>
             )}
             <button
               className="rounded-full text-center bg-black-800 text-white py-4 px-8 hover:bg-black-800/90"
