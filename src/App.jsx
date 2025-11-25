@@ -1,7 +1,7 @@
 import { useState, useRef } from "react";
 import { createWorker } from "tesseract.js";
 import { config } from "./config";
-import { validateDocument } from "./utils/textMatcher";
+import { validateDocument, validateWithFuzzyKeywords } from "./utils/textMatcher";
 
 function App() {
   const [state, setState] = useState("initial"); // initial, processing, success, error
@@ -157,15 +157,31 @@ function App() {
 
       console.log("Extracted text:", text);
 
-      // Validate document
-      const result = validateDocument(
-        text,
-        config.referenceText,
-        config.matchThreshold
-      );
-      setMatchPercentage(Math.round(result.percentage * 100));
-
-      console.log("Match result:", result);
+      // Validate document using fuzzy keyword matching or traditional method
+      let result;
+      if (config.fuzzyMatchingEnabled && config.keywords) {
+        // Use fuzzy keyword matching
+        result = validateWithFuzzyKeywords(
+          text,
+          config.keywords,
+          config.similarityThreshold,
+          config.minKeywordsRequired
+        );
+        setMatchPercentage(Math.round(result.percentage * 100));
+        console.log("Fuzzy keyword match result:", result);
+        console.log("Matched keywords:", result.matches.filter(m => m.isMatch).map(m =>
+          `${m.keyword} → ${m.bestMatch} (${Math.round(m.similarity * 100)}%)`
+        ));
+      } else {
+        // Use traditional full-text matching
+        result = validateDocument(
+          text,
+          config.referenceText,
+          config.matchThreshold
+        );
+        setMatchPercentage(Math.round(result.percentage * 100));
+        console.log("Traditional match result:", result);
+      }
 
       if (result.isMatch) {
         setState("success");
@@ -401,7 +417,11 @@ function App() {
             </p>
             {matchPercentage > 0 && (
               <p className="text-gray-500 text-sm my-4">
-                Match: {matchPercentage}% (minimum 70% required)
+                {config.fuzzyMatchingEnabled ? (
+                  <>Match: {matchPercentage}% ({config.minKeywordsRequired} of {config.keywords.length} keywords required)</>
+                ) : (
+                  <>Match: {matchPercentage}% (minimum {Math.round(config.matchThreshold * 100)}% required)</>
+                )}
               </p>
             )}
             <button
