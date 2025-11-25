@@ -46,6 +46,116 @@ export function calculateMatchPercentage(extractedText, referenceText) {
 }
 
 /**
+ * Calculates Levenshtein distance between two strings
+ * @param {string} str1 - First string
+ * @param {string} str2 - Second string
+ * @returns {number} - Edit distance (number of single-character changes needed)
+ */
+export function levenshteinDistance(str1, str2) {
+  const len1 = str1.length;
+  const len2 = str2.length;
+
+  // Create a 2D array for dynamic programming
+  const matrix = Array(len1 + 1).fill(null).map(() => Array(len2 + 1).fill(0));
+
+  // Initialize first column and row
+  for (let i = 0; i <= len1; i++) matrix[i][0] = i;
+  for (let j = 0; j <= len2; j++) matrix[0][j] = j;
+
+  // Fill the matrix
+  for (let i = 1; i <= len1; i++) {
+    for (let j = 1; j <= len2; j++) {
+      const cost = str1[i - 1] === str2[j - 1] ? 0 : 1;
+      matrix[i][j] = Math.min(
+        matrix[i - 1][j] + 1,      // deletion
+        matrix[i][j - 1] + 1,      // insertion
+        matrix[i - 1][j - 1] + cost // substitution
+      );
+    }
+  }
+
+  return matrix[len1][len2];
+}
+
+/**
+ * Calculates similarity ratio between two strings (0-1)
+ * @param {string} str1 - First string
+ * @param {string} str2 - Second string
+ * @returns {number} - Similarity ratio (1 = identical, 0 = completely different)
+ */
+export function calculateSimilarity(str1, str2) {
+  const longer = str1.length > str2.length ? str1 : str2;
+  const shorter = str1.length > str2.length ? str2 : str1;
+
+  if (longer.length === 0) {
+    return 1.0;
+  }
+
+  const distance = levenshteinDistance(longer, shorter);
+  return (longer.length - distance) / longer.length;
+}
+
+/**
+ * Finds the best fuzzy match for a keyword in the OCR text
+ * @param {string} keyword - The keyword to search for
+ * @param {string} ocrText - The OCR extracted text
+ * @param {number} similarityThreshold - Minimum similarity required (0-1)
+ * @returns {object} - { isMatch: boolean, bestMatch: string, similarity: number }
+ */
+export function findFuzzyMatch(keyword, ocrText, similarityThreshold = 0.80) {
+  const normalizedKeyword = keyword.toLowerCase();
+  const ocrWords = normalizeText(ocrText);
+
+  let bestMatch = null;
+  let bestSimilarity = 0;
+
+  for (const word of ocrWords) {
+    const similarity = calculateSimilarity(normalizedKeyword, word);
+    if (similarity > bestSimilarity) {
+      bestSimilarity = similarity;
+      bestMatch = word;
+    }
+  }
+
+  return {
+    isMatch: bestSimilarity >= similarityThreshold,
+    bestMatch: bestMatch,
+    similarity: bestSimilarity,
+    keyword: keyword
+  };
+}
+
+/**
+ * Validates document using fuzzy keyword matching
+ * @param {string} extractedText - Text extracted from OCR
+ * @param {string[]} keywords - Array of keywords to search for
+ * @param {number} similarityThreshold - Minimum similarity for each keyword (0-1)
+ * @param {number} minKeywordsRequired - Minimum number of keywords that must match
+ * @returns {object} - { isMatch: boolean, matchedCount: number, totalKeywords: number, matches: array, percentage: number }
+ */
+export function validateWithFuzzyKeywords(
+  extractedText,
+  keywords,
+  similarityThreshold = 0.80,
+  minKeywordsRequired = 3
+) {
+  const matches = keywords.map(keyword =>
+    findFuzzyMatch(keyword, extractedText, similarityThreshold)
+  );
+
+  const matchedCount = matches.filter(m => m.isMatch).length;
+  const percentage = matchedCount / keywords.length;
+
+  return {
+    isMatch: matchedCount >= minKeywordsRequired,
+    matchedCount: matchedCount,
+    totalKeywords: keywords.length,
+    matches: matches,
+    percentage: percentage
+  };
+}
+
+/**
  * Validates if extracted text matches reference text above threshold
  * @param {string} extractedText - Text extracted from OCR
  * @param {string} referenceText - Reference text to compare against
