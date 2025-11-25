@@ -150,14 +150,18 @@ function App() {
       });
 
       // Perform OCR
+      const ocrStartTime = performance.now();
       const {
         data: { text },
       } = await worker.recognize(file);
       await worker.terminate();
+      const ocrEndTime = performance.now();
+      console.log(`⏱️ OCR took: ${(ocrEndTime - ocrStartTime).toFixed(0)}ms`);
 
       console.log("Extracted text:", text);
 
       // Validate document using fuzzy keyword matching or traditional method
+      const matchStartTime = performance.now();
       let result;
       if (config.fuzzyMatchingEnabled && config.keywords) {
         // Use fuzzy keyword matching
@@ -168,6 +172,8 @@ function App() {
           config.minKeywordsRequired
         );
         setMatchPercentage(Math.round(result.percentage * 100));
+        const matchEndTime = performance.now();
+        console.log(`⚡ Fuzzy matching took: ${(matchEndTime - matchStartTime).toFixed(0)}ms`);
         console.log("Fuzzy keyword match result:", result);
         console.log("Matched keywords:", result.matches.filter(m => m.isMatch).map(m =>
           `${m.keyword} → ${m.bestMatch} (${Math.round(m.similarity * 100)}%)`
@@ -180,6 +186,8 @@ function App() {
           config.matchThreshold
         );
         setMatchPercentage(Math.round(result.percentage * 100));
+        const matchEndTime = performance.now();
+        console.log(`⚡ Traditional matching took: ${(matchEndTime - matchStartTime).toFixed(0)}ms`);
         console.log("Traditional match result:", result);
       }
 

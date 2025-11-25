@@ -164,11 +164,34 @@ export function validateWithFuzzyKeywords(
   similarityThreshold = 0.80,
   minKeywordsRequired = 3
 ) {
-  const matches = keywords.map(keyword =>
-    findFuzzyMatch(keyword, extractedText, similarityThreshold)
-  );
+  const matches = [];
+  let matchedCount = 0;
 
-  const matchedCount = matches.filter(m => m.isMatch).length;
+  // Early termination: stop checking once we have enough matches
+  for (const keyword of keywords) {
+    const match = findFuzzyMatch(keyword, extractedText, similarityThreshold);
+    matches.push(match);
+
+    if (match.isMatch) {
+      matchedCount++;
+
+      // Stop early if we've found enough matching keywords
+      if (matchedCount >= minKeywordsRequired) {
+        // Add remaining keywords as not checked (for completeness)
+        const remainingKeywords = keywords.slice(matches.length);
+        for (const remainingKeyword of remainingKeywords) {
+          matches.push({
+            isMatch: false,
+            bestMatch: null,
+            similarity: 0,
+            keyword: remainingKeyword
+          });
+        }
+        break;
+      }
+    }
+  }
+
   const percentage = matchedCount / keywords.length;
 
   return {
