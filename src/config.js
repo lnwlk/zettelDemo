@@ -5,13 +5,12 @@ export const config = {
 
   // Fuzzy keyword matching configuration
   keywords: [
-    "zetteln",          // App name - highly distinctive
-    "Zielsetzung",      // Long word appearing twice
-    "behördlicher",     // Contains umlauts - distinctive
-    "Applikation",      // Key term appearing multiple times
-    "digitalisieren"    // Long distinctive word
+    "zetteln",          // App name - highly unique
+    "schwierig",        // Distinctive word from end of text
+    "Teste",            // Call to action word
+    "Applikation"       // Key term appearing multiple times
   ],
   fuzzyMatchingEnabled: true,        // Use fuzzy keyword matching
   similarityThreshold: 0.80,          // 80% similarity required for keyword match
-  minKeywordsRequired: 3,             // Need 3 out of 5 keywords to validate
+  minKeywordsRequired: 2,             // Need 2 out of 4 keywords to validate
 };
