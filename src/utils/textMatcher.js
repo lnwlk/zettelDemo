@@ -105,15 +105,40 @@ export function calculateSimilarity(str1, str2) {
 export function findFuzzyMatch(keyword, ocrText, similarityThreshold = 0.80) {
   const normalizedKeyword = keyword.toLowerCase();
   const ocrWords = normalizeText(ocrText);
+  const keywordLength = normalizedKeyword.length;
 
   let bestMatch = null;
   let bestSimilarity = 0;
 
   for (const word of ocrWords) {
+    // Quick exact match check first (no Levenshtein needed)
+    if (word === normalizedKeyword) {
+      return {
+        isMatch: true,
+        bestMatch: word,
+        similarity: 1.0,
+        keyword: keyword
+      };
+    }
+
+    // Length filter: Skip words that are too different in length
+    // For 70% similarity, length difference can't be more than 30%
+    const lengthDiff = Math.abs(word.length - keywordLength);
+    const maxLengthDiff = Math.ceil(keywordLength * 0.3);
+    if (lengthDiff > maxLengthDiff) {
+      continue; // Skip this word
+    }
+
+    // Now do the expensive Levenshtein calculation
     const similarity = calculateSimilarity(normalizedKeyword, word);
     if (similarity > bestSimilarity) {
       bestSimilarity = similarity;
       bestMatch = word;
+
+      // Early termination: if we found a very good match, stop searching
+      if (bestSimilarity >= 0.95) {
+        break;
+      }
     }
   }
 
@@ -139,11 +164,34 @@ export function validateWithFuzzyKeywords(
   similarityThreshold = 0.80,
   minKeywordsRequired = 3
 ) {
-  const matches = keywords.map(keyword =>
-    findFuzzyMatch(keyword, extractedText, similarityThreshold)
-  );
+  const matches = [];
+  let matchedCount = 0;
 
-  const matchedCount = matches.filter(m => m.isMatch).length;
+  // Early termination: stop checking once we have enough matches
+  for (const keyword of keywords) {
+    const match = findFuzzyMatch(keyword, extractedText, similarityThreshold);
+    matches.push(match);
+
+    if (match.isMatch) {
+      matchedCount++;
+
+      // Stop early if we've found enough matching keywords
+      if (matchedCount >= minKeywordsRequired) {
+        // Add remaining keywords as not checked (for completeness)
+        const remainingKeywords = keywords.slice(matches.length);
+        for (const remainingKeyword of remainingKeywords) {
+          matches.push({
+            isMatch: false,
+            bestMatch: null,
+            similarity: 0,
+            keyword: remainingKeyword
+          });
+        }
+        break;
+      }
+    }
+  }
+
   const percentage = matchedCount / keywords.length;
 
   return {
