@@ -12,6 +12,6 @@ export const config = {
     "Texte"             // From "offizielle Texte"
   ],
   fuzzyMatchingEnabled: true,        // Use fuzzy keyword matching
-  similarityThreshold: 0.80,          // 80% similarity required for keyword match
-  minKeywordsRequired: 3,             // Need 3 out of 5 keywords to validate
+  similarityThreshold: 0.70,          // 70% similarity required for keyword match
+  minKeywordsRequired: 2,             // Need 2 out of 5 keywords to validate
 };
