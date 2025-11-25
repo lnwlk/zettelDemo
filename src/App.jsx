@@ -413,6 +413,11 @@ function App() {
                   Mehr über zetteln
                 </a>
               </div>
+              {(ocrTime > 0 || matchTime > 0) && (
+                <p className="text-xs mt-4 text-gray-400">
+                  ⏱️ OCR: {(ocrTime / 1000).toFixed(1)}s | ⚡ Matching: {matchTime}ms
+                </p>
+              )}
             </div>
           </div>
         )}
