@@ -2,6 +2,7 @@ import { useState, useRef } from "react";
 import { createWorker } from "tesseract.js";
 import { config } from "./config";
 import { validateDocument, validateWithFuzzyKeywords } from "./utils/textMatcher";
+import { resizeImage } from "./utils/imageUtils";
 
 function App() {
   const [state, setState] = useState("initial"); // initial, processing, success, error
@@ -142,6 +143,11 @@ function App() {
     setProgress(0);
 
     try {
+      // Resize image for faster OCR (max 1600px width)
+      console.log(`Original image size: ${(file.size / 1024 / 1024).toFixed(2)}MB`);
+      const resizedFile = await resizeImage(file, 1600, 0.9);
+      console.log(`Resized image size: ${(resizedFile.size / 1024 / 1024).toFixed(2)}MB`);
+
       // Initialize Tesseract worker
       const worker = await createWorker("deu", 1, {
         logger: (m) => {
@@ -151,11 +157,11 @@ function App() {
         },
       });
 
-      // Perform OCR
+      // Perform OCR with resized image
       const ocrStartTime = performance.now();
       const {
         data: { text },
-      } = await worker.recognize(file);
+      } = await worker.recognize(resizedFile);
       await worker.terminate();
       const ocrEndTime = performance.now();
       const ocrDuration = Math.round(ocrEndTime - ocrStartTime);
